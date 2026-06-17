@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class TiggerAni : MonoBehaviour
 
     private InputActionMap map;
     private InputAction moveAction;
+    private InputAction sprintAction;
     private InputAction jumpAction;
 
     [SerializeField] private float movespeed = 5f;
@@ -16,16 +18,18 @@ public class TiggerAni : MonoBehaviour
     private void Awake()
     {
         map = input.FindActionMap("Player");
-        moveAction = map.FindAction("move");
-        jumpAction = map.FindAction("jump");
+        moveAction = map.FindAction("Move");
+        sprintAction = map.FindAction("Sprint");
+        jumpAction = map.FindAction("Jump");
 
         animator = GetComponent<Animator>();
     }
-    void Onable()
+    private void OnEnable()
     {
         map.Enable();
     }
-    void Osable()
+
+    private void OnDisable()
     {
         map.Disable();
     }
@@ -41,11 +45,18 @@ public class TiggerAni : MonoBehaviour
     void Update()
     {
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
+        //transform.Translate(moveInput.y * transform.forward * Time.deltaTime * 300f, Space.World);
+
         float speed = moveInput.y * movespeed * Time.deltaTime;
+        Debug.Log(speed);
+        animator.SetFloat("speed" , speed);
 
-        animator.SetFloat("Speed" , speed);
+        if (sprintAction.IsPressed())
+        {
+            animator.SetFloat("Speed", 10);
+        }
 
-        if (jumpAction.WasReleasedThisFrame())
+        if (jumpAction.WasPressedThisFrame())
         {
             animator.SetTrigger("Jump");
         }

@@ -1,7 +1,7 @@
 # GD-M4-GVD
 
 ![](./screenshots/opdracht%201%20GDV.png)
-opdracht 1
+opdracht 
 
-![](./screenshots/opdracht-blokken.gif)
-opdracht 2
+![](./screenshots/blokken.gif)
+opdracht 
