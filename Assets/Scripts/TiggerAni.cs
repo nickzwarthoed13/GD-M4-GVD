@@ -2,63 +2,59 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TiggerAni : MonoBehaviour
+public class TriggerAni : MonoBehaviour
 {
     [SerializeField] private InputActionAsset input;
-
     private InputActionMap map;
     private InputAction moveAction;
     private InputAction sprintAction;
     private InputAction jumpAction;
 
-    [SerializeField] private float movespeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
+    private Animator ani;
 
-    private Animator animator;
 
-    private void Awake()
+    void Awake()
     {
         map = input.FindActionMap("Player");
         moveAction = map.FindAction("Move");
         sprintAction = map.FindAction("Sprint");
         jumpAction = map.FindAction("Jump");
 
-        animator = GetComponent<Animator>();
+        ani = GetComponent<Animator>();
     }
-    private void OnEnable()
+    void Onable()
     {
         map.Enable();
     }
-
-    private void OnDisable()
+    void Osable()
     {
         map.Disable();
     }
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 moveInput = moveAction.ReadValue<Vector2>();
-        //transform.Translate(moveInput.y * transform.forward * Time.deltaTime * 300f, Space.World);
+        Vector2 moveImput = moveAction.ReadValue<Vector2>();
+        float speed = moveImput.y * moveSpeed * Time.deltaTime;
 
-        float speed = moveInput.y * movespeed * Time.deltaTime;
-        Debug.Log(speed);
-        animator.SetFloat("speed" , speed);
+        ani.SetFloat("speed", speed);
 
         if (sprintAction.IsPressed())
         {
-            animator.SetFloat("Speed", 10);
+            ani.SetFloat("speed", 10);
         }
 
         if (jumpAction.WasPressedThisFrame())
         {
-            animator.SetTrigger("Jump");
+            ani.SetTrigger("jump");
         }
     }
 }

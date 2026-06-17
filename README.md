@@ -5,3 +5,6 @@ opdracht
 
 ![](./screenshots/blokken.gif)
 opdracht 
+
+![](./screenshots/lopen1.gif)
+opdracht
