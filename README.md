@@ -11,3 +11,6 @@ opdracht
 
 ![](./screenshots/opdracht4-ezgif.com-video-to-gif-converter.gif)
 opdracht
+
+![](./screenshots/ezgif.com-video-to-gif-converter.gif)
+opdracht
