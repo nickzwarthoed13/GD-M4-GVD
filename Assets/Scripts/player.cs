@@ -15,9 +15,12 @@ public class player : MonoBehaviour
     private InputAction jumpAction;
     private InputAction sprintAction;
     private CharacterController cc;
-    private Rigidbody rb;
+    private float verticalVelocity = 0f;
+    public float gravity = -9.81f;
+    //private Rigidbody rb;
     public float turnSpeed = 3f;
     public float moveSpeed = 0.25f;
+    public float jumpHeight = 6.5f;
 
     void Awake()
     {
@@ -41,7 +44,7 @@ public class player : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -51,30 +54,31 @@ public class player : MonoBehaviour
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
 
         transform.rotation *= quaternion.Euler(0, moveInput.x * turnSpeed * Time.deltaTime, 0);
+        float currentMoveSpeed = moveInput.y * moveSpeed;
         if (sprintAction.IsPressed())
         {
-            transform.position += transform.forward * moveInput.y * moveSpeed * 2 * Time.deltaTime;
+            currentMoveSpeed *= 2;
         }
-        else
+        if (cc.isGrounded && verticalVelocity < 0f)
         {
-            transform.position += transform.forward * moveInput.y * moveSpeed * Time.deltaTime;
+            verticalVelocity = 0f;
         }
 
-        //float currentMoveSpeed = moveInput.y * moveSpeed * Time.deltaTime;
+        if (jumpAction.WasPressedThisFrame())
+        {
+            verticalVelocity = jumpHeight;
+        }
 
-        //cc.Move(transform.forward * currentMoveSpeed);
+        verticalVelocity += gravity * Time.deltaTime;
+
+        Vector3 move = transform.forward * currentMoveSpeed + Vector3.up * verticalVelocity;
+        cc.Move(move * Time.deltaTime);
 
 
         //transform.Translate(moveInput.y * transform.forward * Time.deltaTime * 5f, Space.World);
         //transform.Rotate(Vector3.up, moveInput.x * Time.deltaTime * 100f, Space.Self);
 
         //animator.SetFloat("Speed", currentMoveSpeed);
-
-        if (jumpAction.WasPressedThisFrame())
-        {
-            rb.linearVelocity += new Vector3(0, 5, 0);
-        }
-
     }
 
 }
