@@ -9,7 +9,7 @@ opdracht
 ![](./screenshots/lopen1.gif)
 opdracht
 
-![](./screenshots/opdracht4-ezgif.com-video-to-gif-converter.gif)
+![](./screenshots/opdracht342343.gif)
 opdracht
 
 ![](./screenshots/ezgif.com-video-to-gif-converter.gif)
